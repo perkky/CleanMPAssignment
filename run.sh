@@ -1,0 +1,2 @@
+javac -cp ".:/usr/local/Tess4J/dist/tess4j-3.4.8.jar:/usr/local/Tess4J/lib/*:/usr/local/opencv/opencv-3.1.0/share/OpenCV/java/*" Main.java Picture.java FileIO.java Label.java ImgProcessing.java OCR.java ShapeIdentifier.java SanityCheck.java
+java -Djava.library.path="/usr/local/opencv/opencv-3.1.0/share/OpenCV/java" -cp ".:/usr/local/Tess4J/dist/tess4j-3.4.8.jar:/usr/local/Tess4J/lib/*:/usr/local/opencv/opencv-3.1.0/share/OpenCV/java/*"   Main SetD/*
