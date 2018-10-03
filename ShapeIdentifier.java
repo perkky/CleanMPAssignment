@@ -54,8 +54,8 @@ public class ShapeIdentifier
                 Mat test = FileIO.readImage(pDirectory+file.getName());
 
                 double avgScore = 0;
-                for (int i = 0; i < 15; i++)
-				      avgScore += compareShapes(pMat, ImgProcessing.edgeCanny(test))/15;
+                for (int i = 0; i < 5; i++)
+				      avgScore += compareShapes(pMat, ImgProcessing.edgeCanny(test))/5;
 
 				if (avgScore < minAvg && avgScore >= 0.0)
 				{
