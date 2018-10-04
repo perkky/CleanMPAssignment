@@ -279,7 +279,7 @@ public class Label extends Thread
 		blobDetector.detect(grayThresholdImg, keypoints);
 
         org.opencv.core.Scalar cores = new org.opencv.core.Scalar(0,0,255);
-        org.opencv.features2d.Features2d.drawKeypoints(pMat, keypoints, pMat, cores, Features2d.DRAW_RICH_KEYPOINTS  );//DEBUG
+        //org.opencv.features2d.Features2d.drawKeypoints(pMat, keypoints, pMat, cores, Features2d.DRAW_RICH_KEYPOINTS  );//DEBUG
 
         return getStrings(grayThresholdImg, keypoints.toArray(), 120, 24);
 	}
