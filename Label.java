@@ -104,7 +104,7 @@ public class Label extends Thread
     //Takes a double array of size 3 and returns what colour it is
 	//Based on colour definitions in notes.txt
 	//To be used on HSV only
-	private static String checkColourHSV(double[] col)
+	private String checkColourHSV(double[] col)
 	{
 		String s = "Black";	//default is black
         if (col.length == 3)
@@ -138,7 +138,7 @@ public class Label extends Thread
 	//It does this by taking the median colour of 20 points (4 height positions with 5 width positions per height)
 	//p1 refers to the apex of the triangle
 	//height is in reference to apex - +ve is downwards and -ve is upwards
-	private static String getColourInTriangle(Mat mat, Point p1, int height, int width)
+	private String getColourInTriangle(Mat mat, Point p1, int height, int width)
 	{
 		String s = "Black"; //default is black
 
@@ -155,7 +155,9 @@ public class Label extends Thread
 				double newWidth = width * i/6;
 				for (int j = 1; j < 6; j++)
 				{
-					temp = checkColourHSV(mat.get( (int)(p1.y + height*i/6), (int)(p1.x - newWidth/2 + newWidth*j/6)) ); //get the colour 
+					temp = checkColourHSV(mat.get( (int)(p1.y + height*i/6), (int)(p1.x - newWidth/2 + newWidth*j/6)) ); //get the colour
+					//Imgproc.circle(pMat, new Point((int)(p1.x - newWidth/2 + newWidth*j/6), (int)(p1.y + height*i/6)), 5, new Scalar(0,255,0), 1);
+
 
 					if (temp.equals("Black"))
 						cols[0]++;
