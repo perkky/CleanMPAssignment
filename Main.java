@@ -55,8 +55,12 @@ public class Main
 				try {
 				while (!labelsArray[i].finished) { Thread.sleep(20);} 
 				} catch (Exception e) {}
+				
+				labelsArray[i].setText(SanityCheck.sanityCheckText(labelsArray[i].getText(), "Data/dictionary.data", "Data/correctwords.data"));
+				labelsArray[i].setSymbol(SanityCheck.sanityCheckSymbol(labelsArray[i].getSymbol(), "Data/symbols.data"));
             }
 
+            sortLabels(labelsArray);
             System.out.println(arg);
             for (Label label : labelsArray)
             {
@@ -65,8 +69,8 @@ public class Main
                     System.out.println("Top:\t" + label.getTopColour());
                     System.out.println("Bot:\t" + label.getBotColour());
                     System.out.println("Class:\t" + label.getClassNum());
-                    System.out.println("Text:\t" + SanityCheck.sanityCheckText(label.getText(), "Data/dictionary.data", "Data/correctwords.data"));//label.getText());  
-                    System.out.println("Symbol:\t" + SanityCheck.sanityCheckSymbol(label.getSymbol(), "Data/symbols.data"));
+                    System.out.println("Text:\t" + label.getText());//label.getText());  
+                    System.out.println("Symbol:\t" + label.getSymbol());
                     System.out.println();
                 }
 
@@ -84,5 +88,107 @@ public class Main
         System.out.println("Took "+ (endTime - startTime) + " ms total");
 		System.out.println("Took "+(endTime - startTime)/args.length + " ms per image");
     }
+    
+    public static void sortLabels(Label[] labels)
+    {
+        for (int i = 0; i < labels.length-1; i++)
+        {
+            for (int j = 0; j < labels.length-1; j++)
+            {
+                boolean switched = false;
+                if (isAlphabetical(labels[j+1].getTopColour(), labels[j].getTopColour()))
+                {
+                        switched = true;
+                }
+                else if (labels[j+1].getTopColour().equals(labels[j].getTopColour()))
+                {
+                        if (isAlphabetical(labels[j+1].getBotColour(), labels[j].getBotColour()))
+                        {
+                                switched = true;
+                        }
+                        else if (labels[j+1].getBotColour().equals(labels[j].getBotColour()))
+                        {
+                                if (isAlphabetical(labels[j+1].getClassNum(), labels[j].getClassNum()))
+                                {
+                                        switched = true;
+                                }
+                                else if (labels[j+1].getClassNum().equals(labels[j].getClassNum()))
+                                {
+                                        if (isAlphabetical(labels[j+1].getText(), labels[j].getText()))
+                                        {
+                                                switched = true;
+                                        }
+                                        else if (labels[j+1].getText().equals(labels[j].getText()))
+                                        {
+                                                if (isAlphabetical(labels[j+1].getSymbol(), labels[j].getSymbol()))
+                                                {
+                                                        switched = true;
+                                                }
+                                                else if (labels[j+1].getSymbol().equals(labels[j].getSymbol()))
+                                                {
+                                                
+                                                }
+                                        }
+                                }
+                        }
+                }
+                
+                if (switched)
+                {
+                        Label temp = labels[j];
+                        labels[j] = labels[j+1];
+                        labels[j+1] = temp;
+                }
+            }
+        }
+    }
+    
+    public static boolean isAlphabetical(String str1, String str2)
+	{
+		boolean result = false;
+		boolean found = false;
+		int i = 0;
+		int minLen = getMinStringLen(str1, str2);
+
+		while(i < minLen && found == false)
+		{
+			if(str1.charAt(i) == str2.charAt(i))
+			{
+				i++;
+			}
+			else if(str1.charAt(i) < str2.charAt(i))
+			{
+				result = true;
+				found = true;
+			}
+			else
+			{
+				found = true;
+			}
+		}
+
+		if(found == false && str1.length() < str2.length())
+		{
+			result = true;
+		}
+
+		return result;
+	}
+
+	public static int getMinStringLen(String str1, String str2)
+	{
+		int minLen;
+
+		if(str2.length() > str1.length())
+		{
+			minLen = str1.length();
+		}
+		else
+		{
+			minLen = str2.length();
+		}
+
+		return minLen;
+	}
 
 }

@@ -55,6 +55,9 @@ public class Label extends Thread
     private String pc3ClassNum = "(none)";
 
 	private String pSymbol = "Flame";		//The symbol
+	
+	private String finalText = "(none)";
+	private String finalSymbol = "Flame";
 
 	/****************Multithreading*************/
 	public void start()
@@ -68,7 +71,7 @@ public class Label extends Thread
 	public void run()
 	{
 		detect();//detect class and text
-        detectSymbol();
+                detectSymbol();
 		try{ Thread.sleep(20); } catch (Exception e) { System.out.println(e.getMessage()); }
 		
 		finished = true;
@@ -369,9 +372,16 @@ public class Label extends Thread
 
         }
         
-
+        finalText = getBestText();
     }
-
+    public void setText(String text)
+    {
+        finalText = text;
+    }
+    public void setSymbol(String text)
+    {
+        finalSymbol = text;
+    }
     //Checks if a point is a valid text position
 	//These are able to be static frames as it is just a general check
     private boolean validTextPosition(Point p)
@@ -741,7 +751,7 @@ public class Label extends Thread
 
     public String getText()
     {
-        return getBestText();
+        return finalText;
     }
 
 	//Compares the text obtained with the regular adaptive threshold and with the inverse
@@ -914,7 +924,7 @@ public class Label extends Thread
 
 	public String getSymbol()
     {
-        return pSymbol;
+        return finalSymbol;
     }
 
 	public void detectSymbol()
@@ -937,7 +947,7 @@ public class Label extends Thread
 
 		pSymbol = si.findMatch();
 
-
+                finalSymbol = pSymbol;
 
 		try
         {
